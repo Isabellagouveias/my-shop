@@ -1,16 +1,16 @@
-import styled from 'styled-components'
+import { styled } from '..';
 
-export const AppContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    min-height: 100vh;
-`
+export const Container = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  minHeight: '100vh'
+})
 
-export const Header = styled.header `
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-`
+export const Header = styled('header', {
+  padding: '2rem 0',
+  width: '100%',
+  maxWidth: 1180,
+  margin: '0 auto'
+})

@@ -1,10 +1,13 @@
-import type { GetStaticProps, NextPage } from 'next'
-import { stripe } from '../lib/stripe'
 import { HomeContainer, Product } from '../styles/pages/home'
-import Stripe from 'stripe'
+import { stripe } from '../lib/stripe'
+
+import 'keen-slider/keen-slider.min.css'
+import { NextPage, GetStaticProps } from 'next'
 import Image from 'next/future/image'
 import Link from 'next/link'
-
+import Head from 'next/head'
+import { useKeenSlider } from 'keen-slider/react'
+import Stripe from 'stripe'
 
 type HomeProps = {
   products: {
@@ -15,24 +18,36 @@ type HomeProps = {
   }[]
 }
 
-const Home: NextPage <HomeProps> = ({ products }) => {
+const Home: NextPage<HomeProps> = ({ products }) => {
+  const [sliderRef] = useKeenSlider({
+    slides: {
+      perView: 3,
+      spacing: 48
+    }
+  })
+
   return (
-      <HomeContainer>
+    <>
+      <Head>
+        <title>Home | My Shop</title>
+      </Head>
+      <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map(product => {
           return (
-          <Link key={product.id} href={`/product/${product.id}`} prefetch={false}>
-            <Product>
-              <Image src={product.imageUrl} width={520} height={480} alt=""></Image>
-              <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
-              </footer>
-            </Product>
-          </Link>
+            <Link key={product.id} href={`/product/${product.id}`} prefetch={false}>
+              <Product className="keen-slider__slide">
+                <Image src={product.imageUrl} width={520} height={480} alt="" />
+                <footer>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </footer>
+              </Product></Link>
           )
-        })}
+        })
+        }
       </HomeContainer>
-    )
+    </>
+  )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -60,4 +75,3 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 export default Home
-

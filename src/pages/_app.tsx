@@ -1,24 +1,18 @@
-import type { AppProps } from 'next/app'
-import { ThemeProvider } from 'styled-components'
-import { GlobalStyle } from '../styles/global'
-import { AppContainer, Header } from '../styles/pages/app'
-import { defaultTheme } from '../styles/theme/default'
+import { globalStyles } from '../styles/global'
 import logoSvg from '../assets/logo.svg'
+import { Container, Header } from '../styles/pages/app'
+
+import { AppProps } from 'next/app'
 import Image from 'next/future/image'
 
-
-function App({ Component, pageProps }: AppProps) {
-   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle/>
-      <AppContainer>
-        <Header>
-          <Image src={logoSvg} alt=""/>
-        </Header>
-        <Component {...pageProps} />
-      </AppContainer>
-    </ThemeProvider>
-   )
+globalStyles()
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <Container>
+      <Header>
+        <Image src={logoSvg} alt="" />
+      </Header>
+      <Component {...pageProps} />
+    </Container>
+  )
 }
-
-export default App
